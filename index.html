@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr. Yasmin Tarek Alshami — General Dentist</title>
+<title>Dr. Yasmin Tarek Alshami — SCFHS Licensed General Dentist</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -207,7 +207,7 @@
     font-size:clamp(0.98rem,1.8vw,1.18rem);
     color:var(--muted);margin-bottom:2.3rem;
     font-weight:400;line-height:1.7;
-    max-width:540px;
+    max-width:560px;
   }
   .hero-sub span{color:var(--primary);font-weight:700}
   .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
@@ -294,7 +294,7 @@
     color:var(--primary);font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;
   }
   .card-name{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:0.25rem}
-  .card-role{font-size:0.82rem;color:var(--teal);font-weight:600;margin-bottom:1.3rem}
+  .card-role{font-size:0.82rem;color:var(--teal);font-weight:700;margin-bottom:1.3rem}
   .card-stats{
     display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;
     padding-top:1rem;border-top:1px solid var(--border);
@@ -315,7 +315,7 @@
     padding:1.4rem 0;
   }
   .marquee-track{
-    display:flex;gap:3rem;animation:marquee 32s linear infinite;
+    display:flex;gap:3rem;animation:marquee 34s linear infinite;
     white-space:nowrap;
   }
   @keyframes marquee{
@@ -600,16 +600,21 @@
   }
   .modal-row strong{display:block;font-size:0.74rem;color:var(--primary);text-transform:uppercase;margin-bottom:0.2rem}
   .modal-row p{font-size:0.87rem;color:var(--text);line-height:1.55}
-  /* ---- EDUCATION & COURSES ---- */
+  /* ---- LICENSURE, EDUCATION & COURSES ---- */
   #education{padding:6rem 2rem;background:var(--bg2)}
   .edu-card{
-    max-width:740px;margin:0 auto;
+    max-width:780px;margin:0 auto;
     background:#ffffff;
     border:1px solid var(--border);
     border-radius:24px;
-    padding:2.5rem;
+    padding:2.4rem;
     text-align:center;
     box-shadow:var(--shadow);
+  }
+  .edu-card.licensure-card{
+    margin-bottom:1.6rem;
+    border:1.5px solid rgba(13,148,136,0.35);
+    background:linear-gradient(135deg,#ffffff 0%,#f0fdfa 100%);
   }
   .edu-icon{font-size:2.8rem;margin-bottom:0.8rem}
   .edu-degree{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;color:var(--text);margin-bottom:0.4rem}
@@ -617,18 +622,30 @@
   .edu-meta{font-size:0.9rem;color:var(--muted);margin-bottom:1.4rem}
   .gpa-badge{
     display:inline-block;
-    padding:0.55rem 1.5rem;
+    padding:0.55rem 1.4rem;
     background:linear-gradient(135deg,#e0f2fe,#ccfbf1);
     border:1px solid rgba(2,132,199,0.25);
     border-radius:99px;
     font-weight:800;
     color:var(--primary);
-    font-size:0.92rem;
+    font-size:0.9rem;
     margin:0.3rem;
+  }
+  .lic-badge{
+    display:inline-block;
+    padding:0.55rem 1.35rem;
+    background:#ffffff;
+    border:1.5px solid rgba(13,148,136,0.32);
+    border-radius:99px;
+    font-weight:800;
+    color:var(--teal);
+    font-size:0.88rem;
+    margin:0.3rem;
+    box-shadow:0 4px 12px rgba(13,148,136,0.08);
   }
   .award-badge{
     display:inline-block;
-    padding:0.55rem 1.5rem;
+    padding:0.55rem 1.4rem;
     background:#fffbeb;
     border:1px solid rgba(245,158,11,0.35);
     border-radius:99px;
@@ -771,7 +788,7 @@
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Cases</a></li>
-    <li><a href="#education">Education</a></li>
+    <li><a href="#education">Licensure & Edu</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -780,11 +797,11 @@
 <section id="hero">
   <div class="hero-inner">
     <div class="hero-left">
-      <div class="avail-tag"><span class="avail-dot"></span>Available for Clinical Opportunities</div>
+      <div class="avail-tag"><span class="avail-dot"></span>SCFHS Licensed Dentist · Available for KSA Opportunities</div>
       <div class="hero-small-name">Dr. Yasmin Tarek Alshami</div>
       <h1 class="hero-name">Dr. Yasmin<br>Tarek Alshami</h1>
       <p class="hero-sub">
-        <span>General Dentist</span> · Passionate clinician experienced in Restorative Dentistry, Endodontics, Pediatric Dentistry, and Periodontal Care — committed to painless, evidence-based dentistry and comprehensive patient care.
+        <span>SCFHS Licensed General Dentist</span> · Passionate clinician experienced in Restorative Dentistry, Endodontics, Pediatric Dentistry, and Periodontal Care — DataFlow verified and committed to painless, evidence-based patient care.
       </p>
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">View Clinical Portfolio</a>
@@ -800,11 +817,11 @@
           <div class="card-avatar-fallback" style="display:none;">🦷<span style="font-size:0.9rem;margin-top:4px;">Dr. YT</span></div>
         </div>
         <div class="card-name">Dr. Yasmin Tarek</div>
-        <div class="card-role">General Dentist · Restorative & Endo</div>
+        <div class="card-role">SCFHS Licensed General Dentist · KSA</div>
         <div class="card-stats">
           <div class="stat"><div class="stat-val">50+</div><div class="stat-lbl">Clinical Cases</div></div>
           <div class="stat"><div class="stat-val">3.66</div><div class="stat-lbl">CGPA Honors</div></div>
-          <div class="stat"><div class="stat-val">1st</div><div class="stat-lbl">Operative Award</div></div>
+          <div class="stat"><div class="stat-val">SCFHS</div><div class="stat-lbl">KSA Licensed</div></div>
         </div>
       </div>
     </div>
@@ -814,23 +831,21 @@
 <!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee-track">
+    <span class="marquee-item">SCFHS Licensed General Dentist (Saudi Arabia)</span>
+    <span class="marquee-item">Saudi Prometric Passed & DataFlow Verified</span>
     <span class="marquee-item">Dr. Mohamed El-Sayed Dental Clinic · Cairo</span>
     <span class="marquee-item">Dr. Amr Abdelnasser Dental Clinic · Mansoura</span>
     <span class="marquee-item">Dr. Ahmed Rabea Dental Clinic</span>
     <span class="marquee-item">Delta University — Oral & Dental Medicine (Honors)</span>
-    <span class="marquee-item">Mansoura Dental Training Center</span>
-    <span class="marquee-item">Talkha Hospital</span>
-    <span class="marquee-item">IDEX International Dental Exhibition</span>
-    <span class="marquee-item">Esthetic Masters Day</span>
+    <span class="marquee-item">Mansoura Dental Training Center & Talkha Hospital</span>
     <span class="marquee-item">1st Place — Diamond Restoration Composite Competition</span>
+    <span class="marquee-item">SCFHS Licensed General Dentist (Saudi Arabia)</span>
+    <span class="marquee-item">Saudi Prometric Passed & DataFlow Verified</span>
     <span class="marquee-item">Dr. Mohamed El-Sayed Dental Clinic · Cairo</span>
     <span class="marquee-item">Dr. Amr Abdelnasser Dental Clinic · Mansoura</span>
     <span class="marquee-item">Dr. Ahmed Rabea Dental Clinic</span>
     <span class="marquee-item">Delta University — Oral & Dental Medicine (Honors)</span>
-    <span class="marquee-item">Mansoura Dental Training Center</span>
-    <span class="marquee-item">Talkha Hospital</span>
-    <span class="marquee-item">IDEX International Dental Exhibition</span>
-    <span class="marquee-item">Esthetic Masters Day</span>
+    <span class="marquee-item">Mansoura Dental Training Center & Talkha Hospital</span>
     <span class="marquee-item">1st Place — Diamond Restoration Composite Competition</span>
   </div>
 </div>
@@ -880,6 +895,7 @@
       <div class="tech-box">
         <p style="font-size:0.82rem;color:var(--teal);margin-bottom:1.25rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em">Clinical Procedures & Protocols</p>
         <div class="tech-cloud">
+          <span class="tech-chip">SCFHS Licensed Practice</span>
           <span class="tech-chip">Anterior & Posterior Composite</span>
           <span class="tech-chip">Biomimetic Layering</span>
           <span class="tech-chip">Diastema Closure</span>
@@ -900,7 +916,6 @@
           <span class="tech-chip">Four-Handed Dentistry</span>
           <span class="tech-chip">Treatment Planning</span>
           <span class="tech-chip">BLS & First Aid</span>
-          <span class="tech-chip">Patient Communication</span>
         </div>
       </div>
     </div>
@@ -1282,13 +1297,28 @@
   </div>
 </section>
 
-<!-- EDUCATION, HONORS & COURSES -->
+<!-- LICENSURE, EDUCATION, HONORS & COURSES -->
 <section id="education">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-label">Academic & Continuing Education</span>
-      <h2 class="section-title">Education, Honors & <span>Courses</span></h2>
+      <span class="section-label">Licensure, Academic & Continuing Education</span>
+      <h2 class="section-title">Licensure, Education & <span>Courses</span></h2>
     </div>
+
+    <!-- SAUDI HEALTHCARE LICENSURE CARD -->
+    <div class="edu-card licensure-card reveal">
+      <div class="edu-icon">🇸🇦</div>
+      <div class="edu-degree">Saudi Healthcare Licensure & Credentials</div>
+      <div class="edu-inst">Saudi Commission for Health Specialties (SCFHS)</div>
+      <div class="edu-meta">Licensed General Dentist · Eligible for Immediate Practice in Saudi Arabia (KSA)</div>
+      <div>
+        <span class="lic-badge">✓ KSA Professional Practice License (SCFHS)</span>
+        <span class="lic-badge">✓ Saudi Prometric Exam — Passed</span>
+        <span class="lic-badge">✓ DataFlow PSV — Verified</span>
+      </div>
+    </div>
+
+    <!-- DEGREE CARD -->
     <div class="edu-card reveal">
       <div class="edu-icon">🎓</div>
       <div class="edu-degree">Bachelor of Oral and Dental Medicine</div>
@@ -1364,7 +1394,7 @@
         </a>
         <div class="contact-card reveal">
           <div class="cc-icon" style="background:#fffbeb">📍</div>
-          <div><div class="cc-label">Locations</div><div class="cc-val">Cairo & Mansoura, Egypt</div></div>
+          <div><div class="cc-label">Locations & Licensure</div><div class="cc-val">SCFHS Licensed (KSA) · Cairo & Mansoura, Egypt</div></div>
         </div>
         <div class="contact-card reveal">
           <div class="cc-icon" style="background:#f0fdfa">🌐</div>
@@ -1382,7 +1412,7 @@
 </section>
 
 <footer>
-  <p><strong>Dr. Yasmin Tarek Alshami</strong> · General Dentist · Cairo & Mansoura, Egypt</p>
+  <p><strong>Dr. Yasmin Tarek Alshami</strong> · SCFHS Licensed General Dentist · KSA & Egypt</p>
 </footer>
 
 <!-- CASE DETAIL MODAL -->
