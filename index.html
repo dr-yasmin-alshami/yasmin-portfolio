@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Yasmin Tarek Alshami — General Dentist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0284c7;
+    --primary-light: #38bdf8;
+    --teal: #0d9488;
+    --mint: #14b8a6;
+    --gold: #f59e0b;
+    --rose: #f43f5e;
+    --bg: #ffffff;
+    --bg2: #f8fafc;
+    --bg3: #f0f9ff;
+    --text: #0f172a;
+    --muted: #475569;
+    --border: rgba(2, 132, 199, 0.14);
+    --card: rgba(255, 255, 255, 0.92);
+    --shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+  }
+  /* ---- SUBTLE STERILE TEXTURE ---- */
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:radial-gradient(rgba(2,132,199,0.06) 1px, transparent 1px);
+    background-size:28px 28px;
+    pointer-events:none;
+    z-index:0;
+  }
+  /* ---- SCROLLBAR ---- */
+  ::-webkit-scrollbar{width:6px}
+  ::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(var(--primary),var(--mint));border-radius:10px}
+  /* ---- CURSOR ---- */
+  #cursor-dot{
+    position:fixed;width:8px;height:8px;
+    background:var(--primary);border-radius:50%;
+    pointer-events:none;z-index:99999;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 10px rgba(2,132,199,0.5);
+    transition:transform 0.05s,background 0.2s;
+    display:none;
+  }
+  #cursor-ring{
+    position:fixed;width:36px;height:36px;
+    border:1.5px solid var(--mint);border-radius:50%;
+    pointer-events:none;z-index:99998;
+    transform:translate(-50%,-50%);
+    transition:transform 0.12s ease,width 0.2s,height 0.2s,border-color 0.2s;
+    opacity:0.75;
+    display:none;
+  }
+  @media(hover:hover){
+    #cursor-dot,#cursor-ring{display:block}
+  }
+  /* ---- LOADER ---- */
+  #loader{
+    position:fixed;inset:0;
+    background:#ffffff;
+    z-index:99997;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:1.5rem;
+    transition:opacity 0.7s ease,visibility 0.7s ease;
+  }
+  #loader.fade-out{opacity:0;visibility:hidden}
+  .loader-tooth{
+    width:64px;height:64px;
+    animation:float-soft 2s ease-in-out infinite;
+  }
+  @keyframes float-soft{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-8px)}
+  }
+  .loader-initials{
+    font-family:'Syne',sans-serif;
+    font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;
+    background:linear-gradient(135deg,var(--primary),var(--teal),var(--primary-light));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+    animation:shimmer 2.5s linear infinite;
+    background-size:300% 300%;
+  }
+  .loader-bar-wrap{width:220px;height:4px;background:#e2e8f0;border-radius:99px;overflow:hidden}
+  .loader-bar{
+    height:100%;width:0%;
+    background:linear-gradient(90deg,var(--primary),var(--mint),var(--primary-light));
+    border-radius:99px;
+    animation:loadfill 1.8s ease forwards;
+  }
+  @keyframes loadfill{to{width:100%}}
+  @keyframes shimmer{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  /* ---- DENTAL PARTICLE CANVAS ---- */
+  #particle-canvas{
+    position:fixed;inset:0;z-index:0;
+    pointer-events:none;
+  }
+  /* ---- NAVBAR ---- */
+  nav{
+    position:fixed;top:-80px;left:0;right:0;
+    z-index:9000;
+    padding:1rem 2rem;
+    display:flex;align-items:center;justify-content:space-between;
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    box-shadow:0 4px 20px rgba(15,23,42,0.03);
+    transition:top 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  nav.visible{top:0}
+  .nav-logo{
+    font-family:'Syne',sans-serif;
+    font-weight:800;font-size:1.2rem;
+    display:flex;align-items:center;gap:0.5rem;
+    background:linear-gradient(90deg,var(--primary),var(--teal));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+    text-decoration:none;
+  }
+  .nav-links{display:flex;gap:1.8rem;list-style:none}
+  .nav-links a{
+    color:var(--muted);font-size:0.875rem;
+    text-decoration:none;font-weight:600;
+    position:relative;padding-bottom:4px;
+    transition:color 0.2s;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;bottom:0;left:0;
+    width:0;height:2px;
+    background:linear-gradient(90deg,var(--primary),var(--mint));
+    transition:width 0.3s ease;
+  }
+  .nav-links a:hover{color:var(--primary)}
+  .nav-links a:hover::after{width:100%}
+  /* ---- SECTIONS ---- */
+  section{position:relative;z-index:1}
+  .container{max-width:1200px;margin:0 auto;padding:0 2rem}
+  /* ---- HERO ---- */
+  #hero{
+    min-height:100vh;
+    display:flex;align-items:center;
+    padding:8rem 2rem 4rem;
+    background:radial-gradient(circle at 85% 20%, rgba(224,242,254,0.65) 0%, rgba(240,253,250,0.45) 40%, rgba(255,255,255,0) 75%);
+  }
+  .hero-inner{
+    max-width:1200px;margin:0 auto;width:100%;
+    display:grid;grid-template-columns:1fr 400px;
+    gap:4rem;align-items:center;
+  }
+  .avail-tag{
+    display:inline-flex;align-items:center;gap:0.55rem;
+    background:#f0fdfa;
+    border:1px solid rgba(13,148,136,0.28);
+    color:var(--teal);font-size:0.8rem;font-weight:700;
+    padding:0.45rem 1.05rem;border-radius:99px;
+    margin-bottom:1.5rem;
+    letter-spacing:0.04em;
+  }
+  .avail-dot{
+    width:8px;height:8px;background:var(--mint);
+    border-radius:50%;
+    animation:pulse-dot 1.6s ease infinite;
+  }
+  @keyframes pulse-dot{
+    0%,100%{box-shadow:0 0 0 0 rgba(20,184,166,0.45)}
+    50%{box-shadow:0 0 0 7px rgba(20,184,166,0)}
+  }
+  .hero-small-name{
+    font-family:'Syne',sans-serif;
+    font-size:0.8rem;
+    font-weight:700;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--primary);
+    margin-bottom:0.6rem;
+  }
+  .hero-name{
+    font-family:'Syne',sans-serif;
+    font-size:clamp(2.4rem,5.5vw,4.8rem);
+    font-weight:800;line-height:1.08;
+    margin-bottom:1.1rem;
+    background:linear-gradient(135deg,#0f172a 15%,var(--primary),var(--teal),#0f172a 85%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+    background-size:300% 300%;
+    animation:shimmer 6s linear infinite;
+  }
+  .hero-sub{
+    font-size:clamp(0.98rem,1.8vw,1.18rem);
+    color:var(--muted);margin-bottom:2.3rem;
+    font-weight:400;line-height:1.7;
+    max-width:540px;
+  }
+  .hero-sub span{color:var(--primary);font-weight:700}
+  .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-primary{
+    padding:0.85rem 2rem;
+    background:linear-gradient(135deg,var(--primary),var(--teal));
+    border:none;border-radius:14px;
+    color:#ffffff;font-weight:700;font-size:0.9rem;
+    text-decoration:none;cursor:pointer;
+    transition:transform 0.2s,box-shadow 0.2s;
+    display:inline-flex;align-items:center;gap:0.5rem;
+    box-shadow:0 8px 24px rgba(2,132,199,0.28);
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(2,132,199,0.4)}
+  .btn-secondary{
+    padding:0.85rem 2rem;
+    background:#ffffff;
+    border:1.5px solid rgba(2,132,199,0.25);
+    border-radius:14px;color:var(--primary);
+    font-weight:700;font-size:0.9rem;
+    text-decoration:none;cursor:pointer;
+    transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem;
+  }
+  .btn-secondary:hover{border-color:var(--primary);background:#f0f9ff;transform:translateY(-2px)}
+  /* ---- 3D CLINICAL PROFILE CARD ---- */
+  .hero-card-wrap{
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .orb-bg{
+    position:absolute;
+    width:360px;height:360px;
+    background:radial-gradient(circle,rgba(56,189,248,0.22) 0%,rgba(20,184,166,0.14) 50%,transparent 72%);
+    border-radius:50%;
+    animation:orb-float 4.5s ease-in-out infinite;
+  }
+  @keyframes orb-float{
+    0%,100%{transform:scale(1) translateY(0)}
+    50%{transform:scale(1.07) translateY(-10px)}
+  }
+  .spin-ring{
+    position:absolute;
+    width:320px;height:320px;
+    border:2px dashed rgba(2,132,199,0.25);
+    border-radius:50%;
+    animation:spin-slow 16s linear infinite;
+  }
+  @keyframes spin-slow{to{transform:rotate(360deg)}}
+  .hero-card{
+    background:rgba(255,255,255,0.95);
+    border:1px solid rgba(2,132,199,0.2);
+    border-radius:28px;
+    padding:2.2rem 2rem;
+    text-align:center;
+    width:305px;
+    backdrop-filter:blur(20px);
+    position:relative;z-index:2;
+    animation:card-float 3.5s ease-in-out infinite;
+    box-shadow:0 24px 60px rgba(15,23,42,0.08),0 0 35px rgba(2,132,199,0.1);
+  }
+  @keyframes card-float{
+    0%,100%{transform:translateY(0) rotateY(0deg)}
+    25%{transform:translateY(-8px) rotateY(2.5deg)}
+    75%{transform:translateY(-4px) rotateY(-2.5deg)}
+  }
+  .card-avatar{
+    width:112px;height:112px;
+    background:linear-gradient(135deg,#e0f2fe,#ccfbf1);
+    border:3px solid #ffffff;
+    border-radius:50%;margin:0 auto 1rem;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(2,132,199,0.22);
+    position:relative;
+  }
+  .card-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 15%;
+  }
+  .card-avatar-fallback{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:var(--primary);font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;
+  }
+  .card-name{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:0.25rem}
+  .card-role{font-size:0.82rem;color:var(--teal);font-weight:600;margin-bottom:1.3rem}
+  .card-stats{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;
+    padding-top:1rem;border-top:1px solid var(--border);
+  }
+  .stat{text-align:center}
+  .stat-val{
+    font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;
+    background:linear-gradient(90deg,var(--primary),var(--teal));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .stat-lbl{font-size:0.65rem;color:var(--muted);font-weight:600;margin-top:2px}
+  /* ---- MARQUEE ---- */
+  .marquee-wrap{
+    overflow:hidden;
+    background:var(--bg2);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    padding:1.4rem 0;
+  }
+  .marquee-track{
+    display:flex;gap:3rem;animation:marquee 32s linear infinite;
+    white-space:nowrap;
+  }
+  @keyframes marquee{
+    0%{transform:translateX(0)}
+    100%{transform:translateX(-50%)}
+  }
+  .marquee-item{
+    font-size:0.88rem;color:var(--muted);font-weight:600;
+    flex-shrink:0;display:inline-flex;align-items:center;gap:0.6rem;
+  }
+  .marquee-item::before{
+    content:'✦';color:var(--mint);font-size:0.8rem;
+  }
+  /* ---- SECTION HEADERS ---- */
+  .section-header{text-align:center;margin-bottom:3.8rem}
+  .section-label{
+    font-size:0.75rem;font-weight:800;letter-spacing:0.16em;
+    color:var(--teal);text-transform:uppercase;
+    margin-bottom:0.65rem;display:inline-block;
+    background:#f0fdfa;padding:0.35rem 0.9rem;border-radius:99px;
+    border:1px solid rgba(13,148,136,0.2);
+  }
+  .section-title{
+    font-family:'Syne',sans-serif;
+    font-size:clamp(2rem,4vw,2.9rem);font-weight:800;
+    line-height:1.15;color:var(--text);
+  }
+  .section-title span{
+    background:linear-gradient(90deg,var(--primary),var(--teal));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  /* ---- SKILLS ---- */
+  #skills{padding:6rem 2rem;background:#ffffff}
+  .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+  .skills-bars{
+    display:flex;flex-direction:column;gap:1.35rem;
+    background:var(--bg2);padding:2rem;border-radius:22px;
+    border:1px solid var(--border);
+  }
+  .skill-item{display:flex;flex-direction:column;gap:0.45rem}
+  .skill-top{display:flex;justify-content:space-between;align-items:center;font-size:0.88rem}
+  .skill-name{font-weight:700;color:var(--text)}
+  .skill-pct{color:var(--primary);font-weight:800}
+  .skill-track{
+    width:100%;height:7px;background:#e2e8f0;
+    border-radius:99px;overflow:hidden;
+  }
+  .skill-fill{
+    height:100%;width:0%;border-radius:99px;
+    transition:width 0.9s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .skill-fill.g1{background:linear-gradient(90deg,var(--primary),var(--primary-light))}
+  .skill-fill.g2{background:linear-gradient(90deg,var(--teal),var(--mint))}
+  .skill-fill.g3{background:linear-gradient(90deg,var(--primary),var(--teal))}
+  .skill-fill.g4{background:linear-gradient(90deg,var(--mint),var(--primary-light))}
+  .tech-box{
+    background:var(--bg2);padding:2rem;border-radius:22px;
+    border:1px solid var(--border);
+  }
+  .tech-cloud{display:flex;flex-wrap:wrap;gap:0.75rem}
+  .tech-chip{
+    padding:0.5rem 1.1rem;
+    background:#ffffff;
+    border:1px solid rgba(2,132,199,0.2);
+    border-radius:99px;
+    font-size:0.8rem;font-weight:600;
+    color:var(--primary);
+    box-shadow:0 2px 8px rgba(15,23,42,0.03);
+    transition:all 0.2s;
+  }
+  .tech-chip:hover{
+    background:var(--primary);color:#ffffff;
+    border-color:var(--primary);transform:translateY(-2px);
+  }
+  /* ---- EXPERIENCE ---- */
+  #experience{padding:6rem 2rem;background:var(--bg2)}
+  .timeline{
+    max-width:840px;margin:0 auto;
+    position:relative;
+    padding-left:2rem;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:2.5px;
+    background:linear-gradient(180deg,var(--primary),var(--mint),var(--primary-light),transparent);
+  }
+  .timeline-item{
+    margin-bottom:2rem;
+    position:relative;
+    padding:1.6rem 1.8rem;
+    background:#ffffff;
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+  }
+  .timeline-dot{
+    position:absolute;
+    left:-2.48rem;top:1.7rem;
+    width:14px;height:14px;
+    background:var(--primary);
+    border:3px solid #ffffff;
+    border-radius:50%;
+    box-shadow:0 0 0 3px rgba(2,132,199,0.25);
+  }
+  .exp-header{
+    display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:0.85rem;
+  }
+  .exp-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;color:var(--text)}
+  .exp-company{font-size:0.9rem;color:var(--primary);font-weight:700;margin-top:0.2rem}
+  .exp-meta{font-size:0.8rem;color:var(--muted);margin-top:0.2rem;font-weight:500}
+  .exp-badge{
+    padding:0.35rem 0.9rem;
+    background:#e0f2fe;
+    border:1px solid rgba(2,132,199,0.22);
+    border-radius:99px;
+    font-size:0.75rem;
+    color:var(--primary);
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .exp-badge.training{
+    background:#f0fdfa;
+    border-color:rgba(13,148,136,0.22);
+    color:var(--teal);
+  }
+  .exp-desc{font-size:0.88rem;color:var(--muted);line-height:1.65}
+  .exp-desc ul{list-style:none;padding:0;margin:0}
+  .exp-desc li{position:relative;padding-left:1.15rem;margin-bottom:0.45rem}
+  .exp-desc li::before{content:'✓';position:absolute;left:0;color:var(--teal);font-weight:800}
+  /* ---- CLINICAL CASE TABS ---- */
+  .proj-tabs-wrap{display:flex;justify-content:center;margin-bottom:3rem}
+  .proj-tabs{
+    display:inline-flex;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:6px;
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .proj-tab{
+    padding:0.7rem 1.4rem;
+    background:transparent;
+    border:none;
+    border-radius:13px;
+    color:var(--muted);
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:0.86rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:all 0.25s ease;
+    white-space:nowrap;
+  }
+  .proj-tab:hover{color:var(--primary);background:#ffffff}
+  .proj-tab.active{
+    background:linear-gradient(135deg,var(--primary),var(--teal));
+    color:#ffffff;
+    box-shadow:0 6px 18px rgba(2,132,199,0.28);
+  }
+  .proj-tab-content{display:none}
+  .proj-tab-content.active{display:block}
+  /* ---- CLINICAL CASES GRID ---- */
+  #projects{padding:6rem 2rem;background:#ffffff}
+  .projects-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1.8rem;
+  }
+  .proj-card{
+    background:#ffffff;
+    border:1px solid var(--border);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    transition:all 0.3s ease;
+    cursor:pointer;
+    display:flex;flex-direction:column;
+  }
+  .proj-card:hover{
+    border-color:var(--primary);
+    transform:translateY(-6px);
+    box-shadow:0 20px 45px rgba(2,132,199,0.12);
+  }
+  .case-banner{
+    height:215px;
+    background:linear-gradient(135deg,#e0f2fe 0%,#f0fdfa 100%);
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+  }
+  .case-banner img{
+    width:100%;height:100%;object-fit:cover;
+    transition:transform 0.4s ease;
+  }
+  .proj-card:hover .case-banner img{
+    transform:scale(1.04);
+  }
+  .case-fallback{
+    display:none;font-size:3rem;
+  }
+  .case-stage-pill{
+    position:absolute;top:12px;right:12px;
+    background:rgba(255,255,255,0.92);
+    color:var(--primary);
+    font-size:0.7rem;font-weight:800;
+    padding:0.3rem 0.75rem;border-radius:99px;
+    border:1px solid rgba(2,132,199,0.2);
+    box-shadow:0 4px 12px rgba(15,23,42,0.08);
+    z-index:2;
+  }
+  .case-body{padding:1.6rem;flex:1;display:flex;flex-direction:column}
+  .proj-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.06rem;margin-bottom:0.65rem;color:var(--text)}
+  .proj-desc{font-size:0.86rem;color:var(--muted);line-height:1.62;margin-bottom:1.25rem;flex:1}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:0.45rem}
+  .proj-tag{
+    padding:0.3rem 0.72rem;
+    background:#f0f9ff;
+    border:1px solid rgba(2,132,199,0.2);
+    border-radius:99px;
+    font-size:0.7rem;
+    color:var(--primary);
+    font-weight:700;
+  }
+  /* ---- CASE MODAL ---- */
+  .modal-backdrop{
+    position:fixed;inset:0;
+    background:rgba(15,23,42,0.65);
+    backdrop-filter:blur(6px);
+    z-index:99000;
+    display:none;align-items:center;justify-content:center;
+    padding:1.2rem;
+  }
+  .modal-backdrop.open{display:flex}
+  .modal-box{
+    background:#ffffff;
+    border:1px solid var(--border);
+    border-radius:24px;
+    max-width:650px;width:100%;
+    max-height:90vh;overflow-y:auto;
+    padding:2rem;
+    position:relative;
+    box-shadow:0 25px 60px rgba(15,23,42,0.25);
+    animation:popIn 0.25s ease;
+  }
+  @keyframes popIn{
+    from{opacity:0;transform:scale(0.95)}
+    to{opacity:1;transform:scale(1)}
+  }
+  .modal-close{
+    position:absolute;top:1.1rem;right:1.1rem;
+    width:36px;height:36px;border-radius:50%;
+    border:1px solid var(--border);background:var(--bg2);
+    color:var(--text);font-size:1.2rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    z-index:5;
+  }
+  .modal-close:hover{background:var(--primary);color:#fff}
+  .modal-img-wrap{
+    width:100%;max-height:320px;
+    border-radius:16px;overflow:hidden;
+    margin-bottom:1.2rem;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .modal-img-wrap img{
+    width:100%;max-height:320px;object-fit:contain;
+  }
+  .modal-cat{
+    font-size:0.75rem;font-weight:800;color:var(--teal);
+    text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.35rem;
+  }
+  .modal-title{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;margin-bottom:0.9rem;color:var(--text)}
+  .modal-grid{display:grid;gap:0.8rem}
+  .modal-row{
+    background:var(--bg2);padding:0.9rem 1.05rem;border-radius:14px;
+    border:1px solid var(--border);
+  }
+  .modal-row strong{display:block;font-size:0.74rem;color:var(--primary);text-transform:uppercase;margin-bottom:0.2rem}
+  .modal-row p{font-size:0.87rem;color:var(--text);line-height:1.55}
+  /* ---- EDUCATION & COURSES ---- */
+  #education{padding:6rem 2rem;background:var(--bg2)}
+  .edu-card{
+    max-width:740px;margin:0 auto;
+    background:#ffffff;
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:2.5rem;
+    text-align:center;
+    box-shadow:var(--shadow);
+  }
+  .edu-icon{font-size:2.8rem;margin-bottom:0.8rem}
+  .edu-degree{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;color:var(--text);margin-bottom:0.4rem}
+  .edu-inst{font-size:1rem;color:var(--primary);font-weight:700;margin-bottom:0.4rem}
+  .edu-meta{font-size:0.9rem;color:var(--muted);margin-bottom:1.4rem}
+  .gpa-badge{
+    display:inline-block;
+    padding:0.55rem 1.5rem;
+    background:linear-gradient(135deg,#e0f2fe,#ccfbf1);
+    border:1px solid rgba(2,132,199,0.25);
+    border-radius:99px;
+    font-weight:800;
+    color:var(--primary);
+    font-size:0.92rem;
+    margin:0.3rem;
+  }
+  .award-badge{
+    display:inline-block;
+    padding:0.55rem 1.5rem;
+    background:#fffbeb;
+    border:1px solid rgba(245,158,11,0.35);
+    border-radius:99px;
+    font-weight:800;
+    color:#b45309;
+    font-size:0.9rem;
+    margin:0.3rem;
+  }
+  .courses-grid{
+    max-width:960px;margin:2.5rem auto 0;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+  }
+  .course-item{
+    background:#ffffff;border:1px solid var(--border);
+    border-radius:16px;padding:1.1rem 1.25rem;
+    text-align:left;box-shadow:0 4px 14px rgba(15,23,42,0.03);
+  }
+  .course-title{font-weight:700;font-size:0.86rem;color:var(--text);margin-bottom:0.25rem}
+  .course-date{font-size:0.75rem;color:var(--teal);font-weight:700}
+  /* ---- CONTACT ---- */
+  #contact{padding:6rem 2rem;background:#ffffff}
+  .contact-inner{
+    display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+    max-width:1100px;margin:0 auto;align-items:center;justify-items:center;
+  }
+  .contact-cards{display:flex;flex-direction:column;gap:1.2rem;width:100%;max-width:500px}
+  .contact-card{
+    display:flex;align-items:center;gap:1.25rem;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:1.25rem 1.5rem;
+    text-decoration:none;
+    transition:all 0.2s;
+  }
+  .contact-card:hover{
+    border-color:var(--primary);
+    background:#f0f9ff;
+    transform:translateX(4px);
+  }
+  .cc-icon{
+    width:48px;height:48px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.35rem;
+    border-radius:14px;
+    flex-shrink:0;
+  }
+  .cc-label{font-size:0.75rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:0.06em}
+  .cc-val{font-size:0.95rem;color:var(--text);font-weight:700;margin-top:0.2rem;word-break:break-word}
+  .ripple-wrap{
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    height:300px;
+  }
+  .ripple{
+    position:absolute;
+    width:110px;height:110px;
+    border:2px solid rgba(2,132,199,0.35);
+    border-radius:50%;
+    animation:ripple-anim 2.4s ease-out infinite;
+  }
+  .ripple:nth-child(2){animation-delay:0.8s}
+  .ripple:nth-child(3){animation-delay:1.6s}
+  @keyframes ripple-anim{
+    0%{width:110px;height:110px;opacity:1}
+    100%{width:300px;height:300px;opacity:0}
+  }
+  .ripple-avatar{
+    width:110px;height:110px;
+    background:linear-gradient(135deg,var(--primary),var(--teal));
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Syne',sans-serif;font-size:1.85rem;font-weight:800;
+    color:#ffffff;
+    position:relative;z-index:2;
+    box-shadow:0 12px 35px rgba(2,132,199,0.35);
+  }
+  /* ---- FOOTER ---- */
+  footer{
+    padding:2rem;
+    text-align:center;
+    background:var(--bg2);
+    border-top:1px solid var(--border);
+    font-size:0.85rem;
+    color:var(--muted);
+  }
+  footer strong{color:var(--primary)}
+  /* ---- REVEAL ---- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 0.65s ease,transform 0.65s ease}
+  .reveal.revealed{opacity:1;transform:none}
+  /* ---- RESPONSIVE ---- */
+  @media(max-width:1024px){
+    .hero-inner{grid-template-columns:1fr;text-align:center}
+    .hero-sub{margin-left:auto;margin-right:auto}
+    .hero-btns{justify-content:center}
+    .hero-card-wrap{display:none}
+    .skills-grid{grid-template-columns:1fr}
+    .projects-grid{grid-template-columns:repeat(2,1fr)}
+    .courses-grid{grid-template-columns:repeat(2,1fr)}
+    .contact-inner{grid-template-columns:1fr}
+    .ripple-wrap{display:none}
+  }
+  @media(max-width:768px){
+    .projects-grid,.courses-grid{grid-template-columns:1fr}
+    .nav-links{gap:0.9rem}
+    .nav-links a{font-size:0.75rem}
+    .hero-btns{flex-direction:column}
+    .btn-primary,.btn-secondary{width:100%;justify-content:center}
+    .exp-header{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+<!-- CURSOR -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <svg class="loader-tooth" viewBox="0 0 64 64" fill="none">
+    <path d="M21 10C14.5 10 10 15.2 10 22.5C10 29.8 14 35.2 16 43.5C17.4 49.4 18.8 55 22.5 55C25.6 55 26.8 49.5 28.5 44.2C29.5 41.2 34.5 41.2 35.5 44.2C37.2 49.5 38.4 55 41.5 55C45.2 55 46.6 49.4 48 43.5C50 35.2 54 29.8 54 22.5C54 15.2 49.5 10 43 10C38.4 10 35.5 12.6 32 12.6C28.5 12.6 25.6 10 21 10Z" fill="url(#toothGrad)" stroke="#0284c7" stroke-width="2.5"/>
+    <defs>
+      <linearGradient id="toothGrad" x1="10" y1="10" x2="54" y2="55" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#e0f2fe"/>
+        <stop offset="1" stop-color="#ccfbf1"/>
+      </linearGradient>
+    </defs>
+  </svg>
+  <div class="loader-initials">Dr. YT</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+
+<!-- DENTAL PARTICLE CANVAS -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">🦷 Dr. Yasmin</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Cases</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="avail-tag"><span class="avail-dot"></span>Available for Clinical Opportunities</div>
+      <div class="hero-small-name">Dr. Yasmin Tarek Alshami</div>
+      <h1 class="hero-name">Dr. Yasmin<br>Tarek Alshami</h1>
+      <p class="hero-sub">
+        <span>General Dentist</span> · Passionate clinician experienced in Restorative Dentistry, Endodontics, Pediatric Dentistry, and Periodontal Care — committed to painless, evidence-based dentistry and comprehensive patient care.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">View Clinical Portfolio</a>
+        <a href="#contact" class="btn-secondary">Contact Me</a>
+      </div>
+    </div>
+    <div class="hero-card-wrap">
+      <div class="orb-bg"></div>
+      <div class="spin-ring"></div>
+      <div class="hero-card">
+        <div class="card-avatar">
+          <img src="assets/dr-yasmin.jpeg" alt="Dr. Yasmin Tarek Alshami" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="card-avatar-fallback" style="display:none;">🦷<span style="font-size:0.9rem;margin-top:4px;">Dr. YT</span></div>
+        </div>
+        <div class="card-name">Dr. Yasmin Tarek</div>
+        <div class="card-role">General Dentist · Restorative & Endo</div>
+        <div class="card-stats">
+          <div class="stat"><div class="stat-val">50+</div><div class="stat-lbl">Clinical Cases</div></div>
+          <div class="stat"><div class="stat-val">3.66</div><div class="stat-lbl">CGPA Honors</div></div>
+          <div class="stat"><div class="stat-val">1st</div><div class="stat-lbl">Operative Award</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Dr. Mohamed El-Sayed Dental Clinic · Cairo</span>
+    <span class="marquee-item">Dr. Amr Abdelnasser Dental Clinic · Mansoura</span>
+    <span class="marquee-item">Dr. Ahmed Rabea Dental Clinic</span>
+    <span class="marquee-item">Delta University — Oral & Dental Medicine (Honors)</span>
+    <span class="marquee-item">Mansoura Dental Training Center</span>
+    <span class="marquee-item">Talkha Hospital</span>
+    <span class="marquee-item">IDEX International Dental Exhibition</span>
+    <span class="marquee-item">Esthetic Masters Day</span>
+    <span class="marquee-item">1st Place — Diamond Restoration Composite Competition</span>
+    <span class="marquee-item">Dr. Mohamed El-Sayed Dental Clinic · Cairo</span>
+    <span class="marquee-item">Dr. Amr Abdelnasser Dental Clinic · Mansoura</span>
+    <span class="marquee-item">Dr. Ahmed Rabea Dental Clinic</span>
+    <span class="marquee-item">Delta University — Oral & Dental Medicine (Honors)</span>
+    <span class="marquee-item">Mansoura Dental Training Center</span>
+    <span class="marquee-item">Talkha Hospital</span>
+    <span class="marquee-item">IDEX International Dental Exhibition</span>
+    <span class="marquee-item">Esthetic Masters Day</span>
+    <span class="marquee-item">1st Place — Diamond Restoration Composite Competition</span>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Clinical Expertise</span>
+      <h2 class="section-title">Dental Skills & <span>Proficiencies</span></h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skills-bars" id="skill-bars">
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Restorative & Esthetic Composite</span><span class="skill-pct">96%</span></div>
+          <div class="skill-track"><div class="skill-fill g1" data-pct="96"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Infection Control & Rubber Dam Isolation</span><span class="skill-pct">96%</span></div>
+          <div class="skill-track"><div class="skill-fill g2" data-pct="96"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Digital Sensor X-Ray & Clinical Diagnosis</span><span class="skill-pct">94%</span></div>
+          <div class="skill-track"><div class="skill-fill g3" data-pct="94"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Pain Management & Local Anesthesia</span><span class="skill-pct">92%</span></div>
+          <div class="skill-track"><div class="skill-fill g4" data-pct="92"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Endodontics (Rotary Systems & Apex Locator)</span><span class="skill-pct">90%</span></div>
+          <div class="skill-track"><div class="skill-fill g1" data-pct="90"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Pediatric Dentistry (SSCs & Restorations)</span><span class="skill-pct">88%</span></div>
+          <div class="skill-track"><div class="skill-fill g2" data-pct="88"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Periodontal Scaling & Root Planing</span><span class="skill-pct">90%</span></div>
+          <div class="skill-track"><div class="skill-fill g3" data-pct="90"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Fixed Prosthodontics & Teeth Bleaching</span><span class="skill-pct">85%</span></div>
+          <div class="skill-track"><div class="skill-fill g4" data-pct="85"></div></div>
+        </div>
+      </div>
+      <div class="tech-box">
+        <p style="font-size:0.82rem;color:var(--teal);margin-bottom:1.25rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em">Clinical Procedures & Protocols</p>
+        <div class="tech-cloud">
+          <span class="tech-chip">Anterior & Posterior Composite</span>
+          <span class="tech-chip">Biomimetic Layering</span>
+          <span class="tech-chip">Diastema Closure</span>
+          <span class="tech-chip">Rubber Dam Isolation</span>
+          <span class="tech-chip">Teflon Gingival Retraction</span>
+          <span class="tech-chip">Rotary Endodontics</span>
+          <span class="tech-chip">Electronic Apex Locator</span>
+          <span class="tech-chip">Multi-Canal Molar RCT</span>
+          <span class="tech-chip">Digital Sensor X-Ray</span>
+          <span class="tech-chip">Stainless Steel Crowns (SSCs)</span>
+          <span class="tech-chip">Pediatric Pulpotomy</span>
+          <span class="tech-chip">Ultrasonic Scaling</span>
+          <span class="tech-chip">Fixed Prosthodontics</span>
+          <span class="tech-chip">Teeth Bleaching</span>
+          <span class="tech-chip">Simple Extractions</span>
+          <span class="tech-chip">Local Anesthesia</span>
+          <span class="tech-chip">Sterilization & Infection Control</span>
+          <span class="tech-chip">Four-Handed Dentistry</span>
+          <span class="tech-chip">Treatment Planning</span>
+          <span class="tech-chip">BLS & First Aid</span>
+          <span class="tech-chip">Patient Communication</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Career Path</span>
+      <h2 class="section-title">Clinical Experience & <span>Training</span></h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">General Dentist</div>
+            <div class="exp-company">Dr. Mohamed El-Sayed Dental Clinic</div>
+            <div class="exp-meta">2025 – 2026 · Cairo, Egypt</div>
+          </div>
+          <div class="exp-badge">General Dentist</div>
+        </div>
+        <div class="exp-desc"><ul>
+          <li>Perform comprehensive oral examinations, clinical diagnoses, and individualized treatment planning for diverse patient cases.</li>
+          <li>Execute anterior and posterior composite restorations under strict rubber dam isolation.</li>
+          <li>Perform root canal treatments using rotary endodontic systems and electronic apex locators, alongside simple extractions and teeth bleaching.</li>
+          <li>Administer local anesthesia effectively and manage acute dental pain for a comfortable patient experience.</li>
+        </ul></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">General Dentist</div>
+            <div class="exp-company">Dr. Amr Abdelnasser Dental Clinic</div>
+            <div class="exp-meta">2024 – 2025 · Mansoura, Egypt</div>
+          </div>
+          <div class="exp-badge">General Dentist</div>
+        </div>
+        <div class="exp-desc"><ul>
+          <li>Delivered full-scope general dental care across operative dentistry, endodontics, fixed prosthodontics, and pediatric dentistry.</li>
+          <li>Operated digital radiography (sensor X-ray) to support accurate clinical diagnosis and prognosis evaluation.</li>
+          <li>Educated patients on preventive oral hygiene practices and post-treatment care to improve long-term outcomes.</li>
+        </ul></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Dental Assistant</div>
+            <div class="exp-company">Dr. Ahmed Rabea Dental Clinic</div>
+            <div class="exp-meta">2023 · Mansoura, Egypt</div>
+          </div>
+          <div class="exp-badge">Clinical Assistant</div>
+        </div>
+        <div class="exp-desc"><ul>
+          <li>Assisted the lead dentist during restorative, endodontic, and surgical procedures through efficient four-handed dentistry.</li>
+          <li>Maintained strict infection control, instrument sterilization, and operatory preparation protocols between patient visits.</li>
+          <li>Prepared dental materials, managed patient flow, and assisted with digital X-ray imaging.</li>
+        </ul></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Dental Assistant</div>
+            <div class="exp-company">Ahmed Maher Dental Clinic & Ammar Dental Clinic</div>
+            <div class="exp-meta">Mansoura, Egypt</div>
+          </div>
+          <div class="exp-badge">Clinical Assistant</div>
+        </div>
+        <div class="exp-desc"><ul>
+          <li>Supported chairside clinical procedures, instrument organization, and sterilization workflows across general and restorative treatments.</li>
+          <li>Assisted in patient preparation, appointment coordination, and maintaining accurate clinical records.</li>
+        </ul></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Dental Trainee (Clinical Rotations)</div>
+            <div class="exp-company">Mansoura Dental Training Center & Talkha Hospital</div>
+            <div class="exp-meta">Mansoura & Talkha, Egypt</div>
+          </div>
+          <div class="exp-badge training">Clinical Training</div>
+        </div>
+        <div class="exp-desc"><ul>
+          <li>Completed supervised clinical rotations practicing restorative procedures, endodontic access, and patient diagnosis at Mansoura Dental Training Center.</li>
+          <li>Gained hands-on hospital training in dental triage, acute pain management, local anesthesia administration, and simple extractions at Talkha Hospital.</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLINICAL CASES PORTFOLIO -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Documented Clinical Record</span>
+      <h2 class="section-title">Clinical <span>Case Portfolio</span></h2>
+    </div>
+
+    <!-- CATEGORY TABS -->
+    <div class="proj-tabs-wrap reveal">
+      <div class="proj-tabs">
+        <button class="proj-tab active" data-tab="restorative">🦷 Restorative Cases</button>
+        <button class="proj-tab" data-tab="endodontic">🔬 Endodontic Cases</button>
+        <button class="proj-tab" data-tab="pediatric">🧸 Pediatric Cases</button>
+        <button class="proj-tab" data-tab="periodontal">✨ Periodontal Cases</button>
+      </div>
+    </div>
+
+    <!-- 1. RESTORATIVE CASES -->
+    <div class="proj-tab-content active" id="tab-restorative">
+      <div class="projects-grid">
+        <div class="proj-card reveal" onclick="openCaseModal('Restorative Dentistry','Anterior Esthetic Direct Composite Veneers','Cervical caries, surface discoloration, and incisal edge wear across maxillary anterior teeth.','Rubber dam & Teflon retraction, selective enamel etching, multi-shade anatomical composite layering, and multi-step finishing/polishing.','Natural shade integration, harmonious smile line, and healthy gingival tissue response.','assets/14.png')">
+          <div class="case-banner">
+            <img src="assets/14.png" alt="Anterior Esthetic Composite" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">😁</span>
+            <span class="case-stage-pill">Before & After</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Anterior Esthetic Composite Smile Makeover</div>
+            <div class="proj-desc">Full anterior esthetic rehabilitation addressing cervical caries, discoloration, and incisal wear using biomimetic composite layering and high-gloss polishing.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Direct Veneers</span><span class="proj-tag">Shade Matching</span><span class="proj-tag">Esthetics</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Restorative Dentistry','Class IV Incisal Edge Fracture Reconstruction','Traumatic crown fracture of the maxillary central incisor involving enamel and dentin.','Bevel preparation, rubber dam isolation, palatal silicone index buildup, dentin-enamel stratification, and incisal halo characterization.','Seamless optical transition with natural mamelon anatomy and functional incisal guidance.','assets/25.png')">
+          <div class="case-banner">
+            <img src="assets/25.png" alt="Class IV Fracture Restoration" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">🦷</span>
+            <span class="case-stage-pill">Class IV</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Class IV Incisal Fracture Reconstruction</div>
+            <div class="proj-desc">Anatomical reconstruction of fractured maxillary central incisors replicating natural translucency, surface texture, and incisal edge contour.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Class IV</span><span class="proj-tag">Layering Technique</span><span class="proj-tag">Rubber Dam</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Restorative Dentistry','Midline Diastema Closure & Proximal Contouring','Anterior midline spacing and mesial carious lesions affecting smile symmetry.','Heavy rubber dam with floss ligatures and Teflon isolation, anatomical sectional matrixing, and bilateral mesial composite build-up.','Balanced central incisor proportions, tight contact points, and natural emergence profile.','assets/28.png')">
+          <div class="case-banner">
+            <img src="assets/28.png" alt="Diastema Closure" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">✨</span>
+            <span class="case-stage-pill">Isolation & Build-Up</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Diastema Closure & Anterior Proximal Build-Up</div>
+            <div class="proj-desc">Conservative bilateral composite additions under rubber dam and floss-ligature isolation to close anterior spacing while preserving tooth structure.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Diastema Closure</span><span class="proj-tag">Floss Ligatures</span><span class="proj-tag">Biomimetic</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Restorative Dentistry','Class III Proximal Caries Restoration','Interproximal carious lesion on maxillary lateral incisor/canine visible labially.','Rubber dam isolation, minimally invasive palatal/labial access, contoured mylar strip adaptation, and nanofilled composite restoration.','Invisible proximal margin seal with preserved natural labial enamel contour.','assets/17.png')">
+          <div class="case-banner">
+            <img src="assets/17.png" alt="Class III Restoration" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">🛡️</span>
+            <span class="case-stage-pill">Class III</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Class III Anterior Proximal Restorations</div>
+            <div class="proj-desc">Minimally invasive caries excavation and proximal wall reconstruction under rubber dam isolation with undetectable color blending.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Class III</span><span class="proj-tag">Rubber Dam</span><span class="proj-tag">Minimally Invasive</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Restorative Dentistry','Posterior Amalgam Replacement & Biomimetic Composite','Defective, leaking posterior amalgam restorations with recurrent marginal caries.','Rubber dam isolation, safe amalgam removal, caries detector verification, incremental cusp-by-cusp occlusal composite sculpting.','Restored primary and secondary occlusal anatomy with tight marginal seal and zero postoperative sensitivity.','assets/10.png')">
+          <div class="case-banner">
+            <img src="assets/10.png" alt="Posterior Composite" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">⚙️</span>
+            <span class="case-stage-pill">Posterior</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Posterior Amalgam Replacement & Occlusal Anatomy</div>
+            <div class="proj-desc">Replacement of failing posterior amalgam fillings with biomimetic composite restorations reproducing natural fissures, cusps, and proximal contacts.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Class I & II</span><span class="proj-tag">Cusp Sculpting</span><span class="proj-tag">Amalgam Replacement</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Restorative Dentistry','Deep Cervical & Subgingival Class V Restoration','Deep cervical carious lesion extending near the gingival margin.','Teflon tape gingival retraction for moisture control, selective etching, and smooth subgingival composite contouring and polishing.','Biocompatible cervical margin with rapid gingival healing and zero plaque retention.','assets/8.png')">
+          <div class="case-banner">
+            <img src="assets/8.png" alt="Class V Cervical Restoration" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">🎯</span>
+            <span class="case-stage-pill">Class V · Teflon</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Deep Cervical Class V Restorations</div>
+            <div class="proj-desc">Subgingival and cervical caries management utilizing Teflon retraction for dry field isolation and ultra-smooth gingival emergence.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Class V</span><span class="proj-tag">Teflon Isolation</span><span class="proj-tag">Gingival Health</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. ENDODONTIC CASES -->
+    <div class="proj-tab-content" id="tab-endodontic">
+      <div class="projects-grid">
+        <div class="proj-card reveal" onclick="openCaseModal('Endodontics','Mandibular Molar 4-Canal Root Canal Treatment','Irreversible pulpitis / necrotic pulp in mandibular first molar with four distinct canals (MB, ML, DB, DL).','Rubber dam isolation, straight-line access cavity, electronic apex locator + radiographic working length verification, rotary NiTi shaping, NaOCl/EDTA irrigation, and warm/cold lateral obturation.','Dense, homogeneous 3D obturation to full radiographic working length across all four canals.','assets/30.png')">
+          <div class="case-banner">
+            <img src="assets/30.png" alt="4-Canal Molar RCT" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">🔬</span>
+            <span class="case-stage-pill">4-Canal Molar</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Mandibular Molar 4-Canal Endodontic Therapy</div>
+            <div class="proj-desc">Complete cleaning, rotary shaping, and dense obturation of four-canal mandibular molars verified via master cone and post-obturation radiographs.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Rotary NiTi</span><span class="proj-tag">4 Canals</span><span class="proj-tag">Digital X-Ray</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Endodontics','Maxillary Molar Multi-Canal Root Canal Therapy','Symptomatic pulpitis in maxillary molar requiring MB1, MB2, DB, and Palatal canal negotiation.','Rubber dam isolation, ultrasonic troughing for canal orifice localization, rotary instrumentation, copious activation irrigation, and bioceramic/gutta-percha obturation.','Complete resolution of symptoms with accurate apical termination on final radiograph.','assets/31.png')">
+          <div class="case-banner">
+            <img src="assets/31.png" alt="Maxillary Molar RCT" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">🩻</span>
+            <span class="case-stage-pill">Maxillary Molar</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Maxillary Molar Multi-Canal Endodontics</div>
+            <div class="proj-desc">Precision orifice localization, curved canal instrumentation, and hermetic root canal obturation in multi-rooted maxillary molars.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Apex Locator</span><span class="proj-tag">Rubber Dam</span><span class="proj-tag">Obturation</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Endodontics','Bifurcated & Curved Premolar Root Canal Treatment','Deep carious pulp exposure in single- and two-rooted premolars with apical curvature.','Glide path negotiation with hand K-files, flexible rotary files, master cone radiographic verification, and immediate coronal seal.','Preserved natural root anatomy without ledging or transportation, ready for coronal restoration.','assets/33.png')">
+          <div class="case-banner">
+            <img src="assets/33.png" alt="Premolar RCT" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">📐</span>
+            <span class="case-stage-pill">Premolar RCT</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Curved & Two-Rooted Premolar Endodontics</div>
+            <div class="proj-desc">Careful glide-path management and rotary preparation of bifurcated premolar canals with radiographic master-cone confirmation.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Glide Path</span><span class="proj-tag">Premolar</span><span class="proj-tag">Coronal Seal</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Endodontics','Endodontic Retreatment & Calcified Canal Negotiation','Failed previous root canal treatment with underfilled canals and periapical pathology.','Removal of old obturation material, full working length negotiation, thorough disinfection protocol, and dense re-obturation.','Complete elimination of previous filling defects and radiographic periapical healing.','assets/36.png')">
+          <div class="case-banner">
+            <img src="assets/36.png" alt="Endodontic Retreatment" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">🔄</span>
+            <span class="case-stage-pill">Retreatment</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Endodontic Retreatment & Apical Patency</div>
+            <div class="proj-desc">Non-surgical endodontic retreatment reclaiming full working length, disinfecting canal walls, and achieving a dense apical seal.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Re-RCT</span><span class="proj-tag">Disinfection</span><span class="proj-tag">Radiographic Follow-Up</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. PEDIATRIC CASES -->
+    <div class="proj-tab-content" id="tab-pediatric">
+      <div class="projects-grid">
+        <div class="proj-card reveal" onclick="openCaseModal('Pediatric Dentistry','Stainless Steel Crowns (SSCs) for Primary Molars','Extensive multi-surface caries in primary molars following pulpotomy/pulpectomy therapy.','Child-friendly behavior guidance, conservative crown preparation, anatomical crimping and adaptation of Stainless Steel Crowns, and radiographic margin verification.','Durable full-coverage protection maintaining arch space until natural exfoliation.','assets/40.png')">
+          <div class="case-banner">
+            <img src="assets/40.png" alt="Stainless Steel Crowns" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">👑</span>
+            <span class="case-stage-pill">SSCs + X-Ray</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Stainless Steel Crowns (SSCs) & Pulp Therapy</div>
+            <div class="proj-desc">Full-coverage stainless steel crown restorations following pediatric pulp therapy, verified radiographically for ideal marginal fit and space maintenance.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Stainless Steel Crown</span><span class="proj-tag">Pulpotomy</span><span class="proj-tag">Space Maintenance</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Pediatric Dentistry','Primary Molar Class II Composite Restorations','Proximal and occlusal carious lesions in primary molars with vital pulps.','Gentle local anesthesia, conservative caries removal, sectional matrix placement, and anatomical tooth-colored composite restoration.','Restored chewing efficiency and natural esthetics in a cooperative, anxiety-free visit.','assets/46.png')">
+          <div class="case-banner">
+            <img src="assets/46.png" alt="Pediatric Class II Composite" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">🧸</span>
+            <span class="case-stage-pill">Primary Molars</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Pediatric Class II & Occlusal Restorations</div>
+            <div class="proj-desc">Conservative caries excavation and tooth-colored composite restorations in primary molars using child-friendly behavior management techniques.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Pedodontics</span><span class="proj-tag">Class II</span><span class="proj-tag">Behavior Guidance</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Pediatric Dentistry','Anterior Primary Tooth Esthetic Restoration','Labial/cervical caries in primary anterior teeth affecting esthetics and tooth integrity.','Minimally invasive excavation, bonding, and shade-matched composite restoration tailored for pediatric patients.','Natural smile restoration and prevention of early childhood caries progression.','assets/45.png')">
+          <div class="case-banner">
+            <img src="assets/45.png" alt="Pediatric Anterior Composite" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">🌟</span>
+            <span class="case-stage-pill">Anterior Pediatric</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Anterior Primary Tooth Esthetic Restoration</div>
+            <div class="proj-desc">Esthetic composite restoration of carious primary anterior teeth restoring natural contour and supporting healthy oral development.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Anterior Primary</span><span class="proj-tag">Composite</span><span class="proj-tag">Preventive Care</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. PERIODONTAL CASES -->
+    <div class="proj-tab-content" id="tab-periodontal">
+      <div class="projects-grid">
+        <div class="proj-card reveal" onclick="openCaseModal('Periodontics','Full-Mouth Ultrasonic Scaling & Gingival Recovery','Generalized plaque-induced gingivitis with heavy supragingival and subgingival calculus deposits.','Full-mouth ultrasonic scaling, fine hand instrumentation, prophy polishing, and personalized oral hygiene instruction.','Complete elimination of bleeding on probing and restoration of firm, coral-pink gingival architecture.','assets/47.png')">
+          <div class="case-banner">
+            <img src="assets/47.png" alt="Full-Mouth Scaling" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">✨</span>
+            <span class="case-stage-pill">Full-Mouth Perio</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Full-Mouth Ultrasonic Scaling & Polishing</div>
+            <div class="proj-desc">Comprehensive removal of heavy supragingival and subgingival calculus deposits, resolving gingival erythema and edema.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Ultrasonic Scaling</span><span class="proj-tag">De-plaquing</span><span class="proj-tag">Gingival Health</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Periodontics','Lingual Anterior Heavy Calculus & Stain Removal','Dense lingual calculus bridges and extrinsic tobacco/tea staining on mandibular anterior teeth.','Precision ultrasonic debridement, subgingival curettage, and enamel polishing without root surface trauma.','Clean, smooth lingual tooth surfaces and resolved lingual papillary inflammation.','assets/49.png')">
+          <div class="case-banner">
+            <img src="assets/49.png" alt="Lingual Calculus Removal" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">💎</span>
+            <span class="case-stage-pill">Lingual View</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Lingual Anterior Calculus & Stain Debridement</div>
+            <div class="proj-desc">Targeted ultrasonic scaling and stain removal on lower anterior lingual surfaces, restoring clean interdental embrasures.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Calculus Removal</span><span class="proj-tag">Stain Polishing</span><span class="proj-tag">Periodontics</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" onclick="openCaseModal('Periodontics','Periodontal Debridement & Tissue Healing Follow-Up','Chronic marginal gingivitis with heavy interproximal deposits and gingival bleeding.','Staged scaling and root planing, chlorhexidine protocol, and follow-up re-evaluation.','Marked reduction in gingival inflammation and improved patient home-care compliance.','assets/50.png')">
+          <div class="case-banner">
+            <img src="assets/50.png" alt="Periodontal Tissue Recovery" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="case-fallback">🌿</span>
+            <span class="case-stage-pill">Tissue Healing</span>
+          </div>
+          <div class="case-body">
+            <div class="proj-title">Periodontal Therapy & Gingival Tissue Recovery</div>
+            <div class="proj-desc">Deep periodontal debridement and oral hygiene reinforcement resulting in visible gingival stippling and tissue recovery.</div>
+            <div class="proj-tags">
+              <span class="proj-tag">Root Planing</span><span class="proj-tag">Oral Hygiene</span><span class="proj-tag">Preventive</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION, HONORS & COURSES -->
+<section id="education">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Academic & Continuing Education</span>
+      <h2 class="section-title">Education, Honors & <span>Courses</span></h2>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-icon">🎓</div>
+      <div class="edu-degree">Bachelor of Oral and Dental Medicine</div>
+      <div class="edu-inst">Delta University for Science and Technology</div>
+      <div class="edu-meta">2017 – 2022 · Egypt</div>
+      <div>
+        <span class="gpa-badge">Very Good with Honor Degree · 88.9% (CGPA: 3.661 / 4.0)</span>
+        <span class="award-badge">🏆 1st Place Winner — Operative Dentistry Competition ("Diamond Restoration – Composite")</span>
+      </div>
+    </div>
+
+    <div class="courses-grid">
+      <div class="course-item reveal">
+        <div class="course-title">IDEX 2023 — International Dental Exhibition</div>
+        <div class="course-date">August 16–18, 2023</div>
+      </div>
+      <div class="course-item reveal">
+        <div class="course-title">Esthetic Masters Day</div>
+        <div class="course-date">February 3, 2023</div>
+      </div>
+      <div class="course-item reveal">
+        <div class="course-title">Eshraqa Dental Center Scientific Day</div>
+        <div class="course-date">January 20, 2023</div>
+      </div>
+      <div class="course-item reveal">
+        <div class="course-title">Egyptian Dental Day</div>
+        <div class="course-date">March 25, 2022</div>
+      </div>
+      <div class="course-item reveal">
+        <div class="course-title">IDEX 2022 — International Dental Exhibition</div>
+        <div class="course-date">March 9–11, 2022</div>
+      </div>
+      <div class="course-item reveal">
+        <div class="course-title">Ahmed Saudi Composite Course</div>
+        <div class="course-date">Sep 7–9 & Nov 4–6, 2021</div>
+      </div>
+      <div class="course-item reveal">
+        <div class="course-title">Dr. Ammar Composite Comprehensive Course</div>
+        <div class="course-date">August 19–22, 2021</div>
+      </div>
+      <div class="course-item reveal">
+        <div class="course-title">Basic Life Support (BLS) & First Aid Course</div>
+        <div class="course-date">July 15–25, 2018</div>
+      </div>
+      <div class="course-item reveal">
+        <div class="course-title">Egy Dental International Congress & Exhibition</div>
+        <div class="course-date">Scientific Conference</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Get In Touch</span>
+      <h2 class="section-title">Book or <span>Connect</span></h2>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-cards">
+        <a href="mailto:yasmin.t.alshami99@gmail.com" class="contact-card reveal">
+          <div class="cc-icon" style="background:#e0f2fe">📧</div>
+          <div><div class="cc-label">Email</div><div class="cc-val">yasmin.t.alshami99@gmail.com</div></div>
+        </a>
+        <a href="tel:+201026103208" class="contact-card reveal">
+          <div class="cc-icon" style="background:#f0fdfa">📱</div>
+          <div><div class="cc-label">Primary Phone / WhatsApp</div><div class="cc-val">+20 102 610 3208</div></div>
+        </a>
+        <a href="tel:+201501337726" class="contact-card reveal">
+          <div class="cc-icon" style="background:#e0f2fe">☎️</div>
+          <div><div class="cc-label">Secondary Phone</div><div class="cc-val">+20 150 133 7726</div></div>
+        </a>
+        <div class="contact-card reveal">
+          <div class="cc-icon" style="background:#fffbeb">📍</div>
+          <div><div class="cc-label">Locations</div><div class="cc-val">Cairo & Mansoura, Egypt</div></div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="cc-icon" style="background:#f0fdfa">🌐</div>
+          <div><div class="cc-label">Languages</div><div class="cc-val">Arabic (Native) · English (Professional)</div></div>
+        </div>
+      </div>
+      <div class="ripple-wrap">
+        <div class="ripple"></div>
+        <div class="ripple"></div>
+        <div class="ripple"></div>
+        <div class="ripple-avatar">🦷</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Dr. Yasmin Tarek Alshami</strong> · General Dentist · Cairo & Mansoura, Egypt</p>
+</footer>
+
+<!-- CASE DETAIL MODAL -->
+<div class="modal-backdrop" id="caseModal" onclick="if(event.target===this)closeCaseModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeCaseModal()">×</button>
+    <div class="modal-img-wrap" id="mImgWrap">
+      <img id="mImg" src="" alt="Clinical Case Preview" onerror="this.parentElement.style.display='none'">
+    </div>
+    <div class="modal-cat" id="mCat"></div>
+    <h3 class="modal-title" id="mTitle"></h3>
+    <div class="modal-grid">
+      <div class="modal-row"><strong>Clinical Presentation / Diagnosis</strong><p id="mDiag"></p></div>
+      <div class="modal-row"><strong>Isolation & Clinical Protocol</strong><p id="mProto"></p></div>
+      <div class="modal-row"><strong>Clinical Outcome</strong><p id="mOut"></p></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- CURSOR ----
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  dot.style.left=mx+'px';dot.style.top=my+'px';
+});
+function animRing(){
+  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button,.proj-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='54px';ring.style.height='54px';ring.style.borderColor='var(--primary)'});
+  el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='var(--mint)'});
+});
+
+// ---- LOADER ----
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('fade-out');
+    setTimeout(()=>{
+      document.getElementById('navbar').classList.add('visible');
+    },350);
+  },1800);
+});
+
+// ---- DENTAL SPARKLE & CLINICAL CROSS PARTICLES ----
+const canvas=document.getElementById('particle-canvas');
+const ctx=canvas.getContext('2d');
+const COLORS=['#0284c7','#14b8a6','#38bdf8','#f59e0b'];
+let W,H,particles=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+resize();window.addEventListener('resize',()=>{resize();initParticles()});
+function initParticles(){
+  particles=[];
+  const n=Math.min(45,Math.floor(W*H/26000));
+  for(let i=0;i<n;i++){
+    particles.push({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-0.5)*0.35,vy:(Math.random()-0.5)*0.35,
+      size:Math.random()*5+4,
+      type:i%3,
+      color:COLORS[Math.floor(Math.random()*COLORS.length)],
+      alpha:Math.random()*0.25+0.12
+    });
+  }
+}
+initParticles();
+function drawParticles(){
+  ctx.clearRect(0,0,W,H);
+  for(let i=0;i<particles.length;i++){
+    const p=particles[i];
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1;
+    if(p.y<0||p.y>H)p.vy*=-1;
+    ctx.save();
+    ctx.globalAlpha=p.alpha;
+    ctx.strokeStyle=p.color;
+    ctx.fillStyle=p.color;
+    ctx.lineWidth=1.5;
+    if(p.type===0){
+      ctx.beginPath();
+      ctx.moveTo(p.x-p.size,p.y);ctx.lineTo(p.x+p.size,p.y);
+      ctx.moveTo(p.x,p.y-p.size);ctx.lineTo(p.x,p.y+p.size);
+      ctx.stroke();
+    } else if(p.type===1){
+      ctx.beginPath();
+      ctx.moveTo(p.x,p.y-p.size*1.2);
+      ctx.quadraticCurveTo(p.x,p.y,p.x+p.size*1.2,p.y);
+      ctx.quadraticCurveTo(p.x,p.y,p.x,p.y+p.size*1.2);
+      ctx.quadraticCurveTo(p.x,p.y,p.x-p.size*1.2,p.y);
+      ctx.quadraticCurveTo(p.x,p.y,p.x,p.y-p.size*1.2);
+      ctx.fill();
+    } else {
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size*0.55,0,Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ---- SKILL BARS ----
+const skillObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('.skill-fill').forEach(bar=>{
+        bar.style.width=bar.dataset.pct+'%';
+      });
+      skillObs.disconnect();
+    }
+  });
+},{threshold:0.25});
+const skillSection=document.getElementById('skill-bars');
+if(skillSection)skillObs.observe(skillSection);
+
+// ---- SCROLL REVEAL ----
+const revealObs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('revealed'),i*60);
+    }
+  });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+// ---- CLINICAL CASE TABS ----
+document.querySelectorAll('.proj-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.proj-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.proj-tab-content').forEach(c=>c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+    document.querySelectorAll('#tab-'+tab.dataset.tab+' .proj-card').forEach((el,i)=>{
+      setTimeout(()=>el.classList.add('revealed'),i*70);
+    });
+  });
+});
+
+// ---- CASE MODAL ----
+function openCaseModal(cat,title,diag,proto,out,imgSrc){
+  const imgWrap=document.getElementById('mImgWrap');
+  const imgEl=document.getElementById('mImg');
+  if(imgSrc){
+    imgWrap.style.display='flex';
+    imgEl.src=imgSrc;
+  } else {
+    imgWrap.style.display='none';
+  }
+  document.getElementById('mCat').textContent=cat;
+  document.getElementById('mTitle').textContent=title;
+  document.getElementById('mDiag').textContent=diag;
+  document.getElementById('mProto').textContent=proto;
+  document.getElementById('mOut').textContent=out;
+  document.getElementById('caseModal').classList.add('open');
+}
+function closeCaseModal(){
+  document.getElementById('caseModal').classList.remove('open');
+}
+</script>
+</body>
+</html>
